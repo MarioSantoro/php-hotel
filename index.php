@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="container ">
-        <table class="table">
+    <div class="container mt-5">
+        <table class="table table-dark table-striped">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -62,7 +63,6 @@
                     ],
 
                 ];
-
                 foreach ($hotels as $key => $hotel) { ?>
                     <?php
                     if ($hotel['parking']) {
@@ -70,19 +70,42 @@
                     } else {
                         $hotel['parking'] = 'NO';
                     }
+                    if ($_GET['park'] === $hotel['parking']) {
                     ?>
-
-                    <tr>
-                        <th scope="row"> <?php echo $key + 1 ?> </th>
-                        <td><?php echo $hotel['name'] ?></td>
-                        <td><?php echo $hotel['description'] ?></td>
-                        <td><?php echo $hotel['parking'] ?></td>
-                        <td><?php echo $hotel['vote'] ?></td>
-                        <td><?php echo $hotel['distance_to_center'] ?></td>
-                    </tr>
+                        <tr>
+                            <th scope="row"> <?php echo $key + 1 ?> </th>
+                            <td><?php echo $hotel['name'] ?></td>
+                            <td><?php echo $hotel['description'] ?></td>
+                            <td><?php echo $hotel['parking'] ?></td>
+                            <td><?php echo $hotel['vote'] ?></td>
+                            <td><?php echo $hotel['distance_to_center'] ?></td>
+                        </tr>
+                    <?php } elseif ($_GET['park'] === 'ALL') {
+                    ?>
+                        <tr>
+                            <th scope="row"> <?php echo $key + 1 ?> </th>
+                            <td><?php echo $hotel['name'] ?></td>
+                            <td><?php echo $hotel['description'] ?></td>
+                            <td><?php echo $hotel['parking'] ?></td>
+                            <td><?php echo $hotel['vote'] ?></td>
+                            <td><?php echo $hotel['distance_to_center'] ?></td>
+                        </tr>
+                    <?php  } ?>
                 <?php } ?>
+
             </tbody>
         </table>
+        <div class="form">
+            <form action="./index.php" method="get">
+                <label for="park"> Parcheggio</label>
+                <select name="park" id="park">
+                    <option selected disabled value="ALL">Choose Parking...</option>
+                    <option value="SI">SI</option>
+                    <option value="ALL">No Preferences</option>
+                </select>
+                <input type="submit" value="Cerca">
+            </form>
+        </div>
     </div>
 
 </body>
