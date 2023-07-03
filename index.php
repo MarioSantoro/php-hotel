@@ -63,34 +63,38 @@
                     ],
 
                 ];
-                foreach ($hotels as $key => $hotel) { ?>
-                    <?php
-                    if ($hotel['parking']) {
-                        $hotel['parking'] = 'SI';
-                    } else {
-                        $hotel['parking'] = 'NO';
-                    }
-                    if ($_GET['park'] === $hotel['parking']) {
-                    ?>
-                        <tr>
-                            <th scope="row"> <?php echo $key + 1 ?> </th>
-                            <td><?php echo $hotel['name'] ?></td>
-                            <td><?php echo $hotel['description'] ?></td>
-                            <td><?php echo $hotel['parking'] ?></td>
-                            <td><?php echo $hotel['vote'] ?></td>
-                            <td><?php echo $hotel['distance_to_center'] ?></td>
-                        </tr>
-                    <?php } elseif ($_GET['park'] === 'ALL') {
-                    ?>
-                        <tr>
-                            <th scope="row"> <?php echo $key + 1 ?> </th>
-                            <td><?php echo $hotel['name'] ?></td>
-                            <td><?php echo $hotel['description'] ?></td>
-                            <td><?php echo $hotel['parking'] ?></td>
-                            <td><?php echo $hotel['vote'] ?></td>
-                            <td><?php echo $hotel['distance_to_center'] ?></td>
-                        </tr>
-                    <?php  } ?>
+                if (empty($_GET['park']) && empty($_GET['voto'])) {
+                    echo 'Hotels not found';
+                } else {
+                    foreach ($hotels as $key => $hotel) { ?>
+                        <?php
+                        if ($hotel['parking']) {
+                            $hotel['parking'] = 'SI';
+                        } else {
+                            $hotel['parking'] = 'NO';
+                        }
+                        if ($_GET['park'] === $hotel['parking'] && $_GET['voto'] == $hotel['vote']) {
+                        ?>
+                            <tr>
+                                <th scope="row"> <?php echo $key + 1 ?> </th>
+                                <td><?php echo $hotel['name'] ?></td>
+                                <td><?php echo $hotel['description'] ?></td>
+                                <td><?php echo $hotel['parking'] ?></td>
+                                <td><?php echo $hotel['vote'] ?></td>
+                                <td><?php echo $hotel['distance_to_center'] ?></td>
+                            </tr>
+                        <?php } elseif ($_GET['park'] === 'ALL' && $_GET['voto'] === 'ALL') {
+                        ?>
+                            <tr>
+                                <th scope="row"> <?php echo $key + 1 ?> </th>
+                                <td><?php echo $hotel['name'] ?></td>
+                                <td><?php echo $hotel['description'] ?></td>
+                                <td><?php echo $hotel['parking'] ?></td>
+                                <td><?php echo $hotel['vote'] ?></td>
+                                <td><?php echo $hotel['distance_to_center'] ?></td>
+                            </tr>
+                        <?php  } ?>
+                    <?php } ?>
                 <?php } ?>
 
             </tbody>
@@ -101,6 +105,17 @@
                 <select name="park" id="park">
                     <option selected disabled value="ALL">Choose Parking...</option>
                     <option value="SI">SI</option>
+                    <option value="ALL">No Preferences</option>
+                </select>
+
+                <label for="voto"> Voto</label>
+                <select name="voto" id="voto">
+                    <option selected disabled value="ALL">Choose Vote...</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                     <option value="ALL">No Preferences</option>
                 </select>
                 <input type="submit" value="Cerca">
